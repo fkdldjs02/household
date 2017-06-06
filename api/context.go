@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/fkdldjs02/household/api/model"
 	"github.com/gin-gonic/gin"
-	"github.com/usjeong/household/api/model"
 )
 
 // SetUserContext 사용자 생성

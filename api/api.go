@@ -3,10 +3,10 @@ package api
 import (
 	"log"
 
+	"github.com/fkdldjs02/household/api/model"
+	"github.com/fkdldjs02/household/conf"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"github.com/usjeong/household/api/model"
-	"github.com/usjeong/household/conf"
 )
 
 // App inject configuration

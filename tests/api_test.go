@@ -6,10 +6,10 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/fkdldjs02/household/api"
+	"github.com/fkdldjs02/household/conf"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"github.com/usjeong/household/api"
-	"github.com/usjeong/household/conf"
 	"github.com/usjeong/testSuit"
 )
 

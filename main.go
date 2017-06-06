@@ -9,9 +9,9 @@ import (
 	cors "gopkg.in/gin-contrib/cors.v1"
 	pprof "gopkg.in/gin-contrib/pprof.v1"
 
+	"github.com/fkdldjs02/household/api"
+	"github.com/fkdldjs02/household/conf"
 	"github.com/gin-gonic/gin"
-	"github.com/usjeong/household/api"
-	"github.com/usjeong/household/conf"
 )
 
 func runApp(mode string) {
