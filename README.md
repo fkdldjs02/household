@@ -5,7 +5,7 @@
     * gcc(64bit)
     * glide 패키지 관리자
 * 설치 방법
-    * ```glide install```
+    * `glide install`
 * 코드 구성
     * conf/config.go
         * 데이터베이스 생성 정보를 담고 있음
