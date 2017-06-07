@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 
 	"github.com/fkdldjs02/household/api"
@@ -96,4 +97,69 @@ func TestCategory(t *testing.T) {
 	body, _ = ioutil.ReadAll(resp.Body)
 	t.Log("수정 후 항목들: " + string(body))
 	assert.Equal(t, http.StatusOK, resp.Code)
+}
+
+func TestHousehold(t *testing.T) {
+	data := url.Values{}
+	data.Add("typeof", "지출")
+	data.Add("categoryName", "식비")
+	data.Add("content", "저녁 식사")
+	data.Add("money", "10000")
+	data.Add("author", "testUser")
+
+	suit := &testSuit.TestSuit{
+		Router: App,
+		Method: "POST",
+		URL:    "/household",
+		Data:   data,
+	}
+
+	resp := suit.Do()
+	body, _ := ioutil.ReadAll(resp.Body)
+	t.Log("가계부 생성 응답: " + string(body))
+	assert.Equal(t, http.StatusCreated, resp.Code)
+
+	suit = &testSuit.TestSuit{
+		Router: App,
+		Method: "GET",
+		URL:    "/household/list/식비",
+		Data:   data,
+	}
+
+	resp = suit.Do()
+	body, _ = ioutil.ReadAll(resp.Body)
+	t.Log("변경 전 식비에 관한 기록: " + string(body))
+	assert.Equal(t, http.StatusOK, resp.Code)
+
+	data = url.Values{}
+	data.Add("typeof", "지출")
+	data.Add("categoryName", "식비")
+	data.Add("content", "아침 식사")
+	data.Add("money", "13000")
+	data.Add("author", "testUser")
+
+	suit = &testSuit.TestSuit{
+		Router: App,
+		Method: "PUT",
+		URL:    "/household/1",
+		Data:   data,
+	}
+
+	resp = suit.Do()
+	body, _ = ioutil.ReadAll(resp.Body)
+	assert.Equal(t, http.StatusOK, resp.Code)
+
+	suit = &testSuit.TestSuit{
+		Router: App,
+		Method: "GET",
+		URL:    "/household/list/식비",
+		Data:   data,
+	}
+
+	resp = suit.Do()
+	body, _ = ioutil.ReadAll(resp.Body)
+	t.Log("변경 후 식비에 관한 기록: " + string(body))
+	assert.Equal(t, http.StatusOK, resp.Code)
+
+	os.Remove("./test.db")
 }

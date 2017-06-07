@@ -4,15 +4,15 @@ import "database/sql"
 
 // Household 가계부 모델
 type Household struct {
-	ID           int64  `db:"id" json:"id"`
-	TypeOf       string `db:"typeof" json:"typeof" form:"typeof"`
-	CategoryName string `db:"category_name" json:"categoryName" form:"categoryName"`
-	Content      string `db:"content" json:"content" form:"content"`
-	Money        int    `db:"money" json:"money" form:"money"`
-	Others       string `db:"others" json:"others" form:"others"`
-	Author       string `db:"author" json:"author" form:"author"`
-	State        bool   `db:"state" json:"state" form:"state"`
-	CreateAt     int64  `db:"create_at" json:"createAt"`
+	ID           int64   `db:"id" json:"id"`
+	TypeOf       string  `db:"typeof" json:"typeof" form:"typeof"`
+	CategoryName string  `db:"category_name" json:"categoryName" form:"categoryName"`
+	Content      string  `db:"content" json:"content" form:"content"`
+	Money        int     `db:"money" json:"money" form:"money"`
+	Others       string  `db:"others" json:"others" form:"others"`
+	Author       string  `db:"author" json:"author" form:"author"`
+	State        bool    `db:"state" json:"state" form:"state"`
+	CreateAt     []uint8 `db:"create_at" json:"createAt"`
 }
 
 // GetHouseholdArray 모든 가계부 조회
@@ -37,7 +37,7 @@ func (db *DBPool) SetHousehold(household *Household) (sql.Result, error) {
 		INSERT INTO household 
 			(typeof, category_name, content, money, others, author)
 		VALUES
-			(:typeof, :category_name, content, money, others, author)
+			(:typeof, :category_name, :content, :money, :others, :author)
 	`
 	result, err := db.Master.NamedExec(query, household)
 	return result, err

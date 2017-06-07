@@ -39,7 +39,7 @@ func SetRouter(router *gin.Engine) {
 	household := router.Group("household")
 	{
 		household.POST("", SetHouseholdConext)
-		household.PUT("", PutHouseholdContext)
+		household.PUT("/:id", PutHouseholdContext)
 		household.GET("/list/:name", GetHouseholdListContext)
 		household.GET("/row/:id", GetHouseholdContext)
 		household.DELETE("/row/:id", DeleteHouseholdContext)

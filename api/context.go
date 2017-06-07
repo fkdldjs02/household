@@ -193,14 +193,15 @@ func GetHouseholdContext(c *gin.Context) {
 // SetHouseholdConext 가계부 생성
 func SetHouseholdConext(c *gin.Context) {
 	household := model.Household{}
-	if c.Bind(&household) != nil {
+	if err := c.Bind(&household); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
+		log.Println(err)
 		return
 	}
 
 	result, err := db.SetHousehold(&household)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		c.AbortWithStatus(http.StatusConflict)
 		log.Println(err)
 		return
 	}
@@ -217,13 +218,20 @@ func SetHouseholdConext(c *gin.Context) {
 
 // PutHouseholdContext 가계부 수정
 func PutHouseholdContext(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
 	household := model.Household{}
 	if c.Bind(&household) != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	_, err := db.PutHousehold(&household)
+	household.ID = id
+	_, err = db.PutHousehold(&household)
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		log.Println(err)

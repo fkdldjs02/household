@@ -4,10 +4,10 @@ import "database/sql"
 
 // User 사용자 모델
 type User struct {
-	ID       int64  `db:"id" json:"id"`
-	Name     string `db:"name" json:"name" form:"name" binding:"required"`
-	PassWD   string `db:"passwd" json:"passwd" form:"passwd" binding:"required"`
-	CreateAt int64  `db:"create_at" json:"createAt"`
+	ID       int64   `db:"id" json:"id"`
+	Name     string  `db:"name" json:"name" form:"name" binding:"required"`
+	PassWD   string  `db:"passwd" json:"passwd" form:"passwd" binding:"required"`
+	CreateAt []uint8 `db:"create_at" json:"createAt"`
 }
 
 // GetUserList 모든 사용자의 정보를 조회
